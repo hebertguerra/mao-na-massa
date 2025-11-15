@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mão-na-Massa – Plataforma Educacional para Serviços e Ajuda Comunitária</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> <!-- Ícones Font Awesome para profissionalismo -->
+    <style>
+        /* ===== VARIÁVEIS CSS AVANÇADAS PARA DESIGN SISTEMÁTICO ===== */
+        /* Dica para alunos: Variáveis CSS criam um design system. Altere aqui para temas globais (ex: dark mode via JS). */
+        :root {
+            --primary: #ff6b35; /* Laranja vibrante para CTAs */
+            --primary-dark: #e85621; /* Hover escuro */
+            --secondary: #1b325f; /* Azul profundo para confiança */
+            --accent: #4ecdc4; /* Verde-azul para destaques positivos */
+            --bg: #f8f9ff; /* Fundo etéreo */
+            --card: #ffffff; /* Cartões limpos */
+            --border: #e0e6ed; /* Bordas suaves */
+            --text: #2c3e50; /* Texto principal */
+            --muted: #7f8c8d; /* Secundário */
+            --success: #27ae60; /* Sucesso */
+            --warning: #f39c12; /* Avisos */
+            --error: #e74c3c; /* Erros */
+            --radius: 16px;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
+            --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Curva suave para UX premium */
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+        }
+
+        /* ===== RESET E TIPOGRAFIA ===== */
+        /* Dica: Reset normalize para consistência. Use rem para escalabilidade. */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; /* Fonte moderna via Google Fonts (adicione <link> se necessário) */
+            background: linear-gradient(to bottom, var(--bg), #e8f4f8); /* Gradiente sutil para profundidade */
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3 { font-weight: 600; line-height: 1.2; }
+        h1 { font-size: clamp(1.8rem, 5vw, 3rem); } /* Ajustado para melhor escala em mobile */
+        h2 { font-size: clamp(1.3rem, 4vw, 2.5rem); }
+        h3 { font-size: 1.125rem; } /* Ligeiramente menor para densidade */
+
+        /* ===== HEADER COM MENU RESPONSIVO MELHORADO ===== */
+        /* Dica: Menu hambúrguer para mobile com CSS/JS. Use position: sticky para navegação persistente. */
+        header {
+            background: rgba(255, 255, 255, 0.95); /* Semi-transparente para overlay */
+            backdrop-filter: blur(10px); /* Efeito glassmorphism */
+            color: var(--secondary);
+            padding: var(--spacing-xs) var(--spacing-md); /* Reduzido padding em geral */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: clamp(1.4rem, 4vw, 1.8rem); /* Escala responsiva para logo */
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            text-decoration: none;
+            color: var(--secondary);
+        }
+
+        .logo i { font-size: clamp(1.5rem, 5vw, 2rem); color: var(--primary); }
+
+        nav {
+            display: flex;
+            gap: var(--spacing-sm); /* Gap menor para caber mais itens */
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: clamp(0.8rem, 2.5vw, 1rem); /* Escala de fonte responsiva */
+            font-weight: 500;
+            cursor: pointer;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius);
+            transition: var(--transition);
+            position: relative; /* Para badge de notificações */
+            white-space: nowrap; /* Evita quebra de linha em botões */
+        }
+
+        nav button:hover,
+        nav button.active {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .mobile-menu {
+            display: none; /* Oculto em desktop */
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--secondary);
+        }
+
+        /* ===== SEÇÃO HERO COM ANIMAÇÕES MELHORADAS PARA MOBILE ===== */
+        /* Dica: Use Intersection Observer (JS) para animações on-scroll. Aqui, CSS keyframes para entrada. */
+        .hero {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: clamp(var(--spacing-sm), 5vw, var(--spacing-lg)); /* Padding responsivo */
+            display: grid;
+            grid-template-columns: 1fr 350px; /* Ligeiramente menor no lado direito */
+            gap: var(--spacing-lg);
+            align-items: start;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-content h1 {
+            color: var(--secondary);
+            margin-bottom: var(--spacing-sm);
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content p {
+            font-size: clamp(1rem, 3vw, 1.1rem); /* Escala para legibilidade em mobile */
+            color: var(--muted);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: var(--spacing-xs); /* Gap menor em mobile */
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: clamp(var(--spacing-xs), 3vw, var(--spacing-sm)) clamp(var(--spacing-md), 4vw, var(--spacing-lg)); /* Padding responsivo */
+            border: none;
+            border-radius: var(--radius);
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            position: relative;
+            overflow: hidden; /* Para efeito ripple */
+            flex: 1; /* Em mobile, ocupa espaço disponível */
+            min-width: 140px; /* Mínimo para touch */
+            justify-content: center;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--secondary);
+            border: 2px solid var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--secondary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        /* ===== CARDS LATERAIS (SIMULAÇÕES COMUNITÁRIAS) ===== */
+        .simulation-cards {
+            display: grid;
+            gap: var(--spacing-sm); /* Gap menor */
+        }
+
+        .simulation-card {
+            padding: var(--spacing-md); /* Padding reduzido */
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-card);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .simulation-card:nth-child(1) { background: linear-gradient(145deg, #f0f8ff, #e6f3ff); border-left: 4px solid var(--primary); }
+        .simulation-card:nth-child(2) { background: linear-gradient(145deg, #fffaf0, #fff4e6); border-left: 4px solid var(--accent); }
+        .simulation-card:nth-child(3) { background: linear-gradient(145deg, #f0fff4, #d4f4e2); border-left: 4px solid var(--success); }
+
+        .simulation-card:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow);
+        }
+
+        .simulation-card h3 {
+            color: var(--secondary);
+            margin-bottom: var(--spacing-xs);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            font-size: 1.1rem; /* Fixo, mas responsivo via clamp se necessário */
+        }
+
+        .simulation-card p { color: var(--muted); font-size: 0.9rem; }
+
+        /* ===== SEÇÃO DE BUSCA E CATEGORIAS AVANÇADA (FOCO COMUNITÁRIO) ===== */
+        /* Dica: Filtro com debounce (JS) para performance em buscas. */
+        .search-section {
+            background: var(--card);
+            padding: clamp(var(--spacing-md), 5vw, var(--spacing-xl)); /* Padding responsivo */
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin: var(--spacing-md) auto; /* Margem menor em mobile */
+            max-width: 1400px;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .search-bar {
+            position: relative;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-sm) clamp(2.5rem, 6vw, var(--spacing-lg)); /* Ícone ajustado */
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            font-size: clamp(1rem, 3vw, 1rem);
+            transition: var(--transition);
+            background: var(--bg);
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: var(--spacing-sm);
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+        }
+
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-xs);
+            margin-bottom: var(--spacing-md);
+            justify-content: center;
+            overflow-x: auto; /* Scroll horizontal em mobile se necessário */
+            padding-bottom: var(--spacing-xs);
+            -webkit-overflow-scrolling: touch; /* Smooth scroll em iOS */
+        }
+
+        .category-btn {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            white-space: nowrap; /* Evita quebra */
+            flex-shrink: 0; /* Não encolhe */
+            min-width: 100px; /* Mínimo para legibilidade */
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        /* ===== GRID DE PROFISSIONAIS COM EFEITOS (SERVIÇOS COMUNITÁRIOS) ===== */
+        /* Dica: Masonry layout via CSS Grid para irregularidade visual. */
+        .professionals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(clamp(250px, 90vw, 300px), 1fr)); /* Colunas mais flexíveis */
+            gap: var(--spacing-md);
+            animation: fadeInUp 0.6s ease-out 0.4s both;
+        }
+
+        .professional-card {
+            background: var(--card);
+            padding: var(--spacing-md); /* Padding reduzido em mobile */
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-card);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .professional-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+
+        .professional-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary);
+        }
+
+        .professional-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .professional-icon {
+            font-size: clamp(1.5rem, 6vw, 2rem); /* Ícone responsivo */
+            margin-bottom: var(--spacing-sm);
+            display: block;
+        }
+
+        .professional-tag {
+            display: inline-block;
+            background: var(--bg);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: 12px;
+            font-size: 0.8rem;
+            color: var(--text);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .professional-card h3 {
+            color: var(--secondary);
+            margin-bottom: var(--spacing-xs);
+            font-size: 1.1rem;
+        }
+
+        .professional-card p {
+            color: var(--muted);
+            margin-bottom: var(--spacing-sm);
+            font-size: 0.95rem;
+        }
+
+        .professional-price {
+            font-weight: bold;
+            font-size: clamp(1.1rem, 4vw, 1.2rem);
+            color: var(--primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .professional-rating {
+            display: flex;
+            gap: var(--spacing-xs);
+            margin-bottom: var(--spacing-sm);
+            color: var(--warning);
+        }
+
+        /* ===== MODAL AVANÇADO COM ANIMAÇÃO (MELHOR EM MOBILE) ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 200;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+            padding: var(--spacing-sm); /* Padding para telas pequenas */
+        }
+
+        .modal-content {
+            background: var(--card);
+            padding: clamp(var(--spacing-md), 8vw, var(--spacing-xl));
+            border-radius: var(--radius);
+            max-width: 500px;
+            width: 100%; /* Full width em mobile */
+            max-height: 90vh;
+            overflow-y: auto; /* Scroll se necessário */
+            text-align: center;
+            box-shadow: var(--shadow-hover);
+            transform: scale(0.8) translateY(50px);
+            animation: modalSlideIn 0.3s ease forwards;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: var(--spacing-sm);
+            top: var(--spacing-sm);
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            cursor: pointer;
+            color: var(--muted);
+            transition: var(--transition);
+        }
+
+        .close:hover { color: var(--error); transform: scale(1.1); }
+
+        /* ===== TELAS EDUCACIONAIS E CADASTRO COM FORMULAIRE VALIDADO ===== */
+        .screen {
+            display: none;
+            max-width: 1400px;
+            margin: var(--spacing-md) auto; /* Margem responsiva */
+            padding: 0 clamp(var(--spacing-sm), 5vw, var(--spacing-lg));
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .screen.active { display: block; }
+
+        .educational-screen,
+        .cadastro-screen {
+            background: var(--card);
+            padding: clamp(var(--spacing-md), 8vw, var(--spacing-xl));
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-md);
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: var(--spacing-xs);
+            font-weight: 600;
+            color: var(--secondary);
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: var(--spacing-sm);
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            transition: var(--transition);
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+
+        .form-group input:invalid,
+        .form-group select:invalid {
+            border-color: var(--error);
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 0.85rem;
+            margin-top: var(--spacing-xs);
+            display: none;
+        }
+
+        /* ===== ESTILOS PARA RECURSOS COMUNITÁRIOS (RESPONSIVOS) ===== */
+        .community-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .community-card {
+            background: linear-gradient(145deg, #f0f9ff, #e0f2fe);
+            padding: var(--spacing-md);
+            border-radius: var(--radius);
+            text-align: center;
+            border-left: 4px solid var(--success);
+            transition: var(--transition);
+        }
+
+        .community-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+        }
+
+        .community-card i {
+            font-size: clamp(2rem, 8vw, 2.5rem);
+            margin-bottom: var(--spacing-sm);
+            color: var(--success);
+        }
+
+        .community-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        /* ===== FOOTER COM LINKS (MELHOR EM MOBILE) ===== */
+        footer {
+            background: linear-gradient(135deg, var(--secondary), #0f1a36);
+            color: white;
+            text-align: center;
+            padding: clamp(var(--spacing-md), 5vw, var(--spacing-lg));
+            margin-top: var(--spacing-md);
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            padding: var(--spacing-xs);
+        }
+
+        .footer-links a:hover { color: var(--primary); }
+
+        /* ===== RESPONSIVIDADE MELHORADA COM MAIS BREAKPOINTS ===== */
+        @media (max-width: 1200px) {
+            .hero { grid-template-columns: 1fr 300px; }
+        }
+
+        @media (max-width: 1024px) {
+            .hero { 
+                grid-template-columns: 1fr; 
+                gap: var(--spacing-md); 
+                text-align: center; /* Centraliza conteúdo em tablet */
+            }
+            .simulation-cards { 
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header { 
+                padding: var(--spacing-xs) var(--spacing-sm); 
+            }
+            nav { 
+                display: none; 
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                gap: var(--spacing-sm);
+                box-shadow: var(--shadow);
+                padding: var(--spacing-md);
+            }
+            nav.active { display: flex; } /* Classe para mostrar via JS */
+            .mobile-menu { display: block; }
+            .categories { 
+                justify-content: flex-start; 
+                gap: var(--spacing-xs); 
+            }
+            .professionals-grid { 
+                grid-template-columns: 1fr; 
+                gap: var(--spacing-sm);
+            }
+            .hero-actions { 
+                flex-direction: column; 
+                align-items: stretch; 
+            }
+            .btn { 
+                margin-bottom: var(--spacing-xs); 
+            }
+            .footer-content { 
+                flex-direction: column; 
+                gap: var(--spacing-md); 
+                text-align: center;
+            }
+            .footer-links { 
+                order: -1; 
+                width: 100%; 
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero, .search-section, .educational-screen, .cadastro-screen { 
+                padding: var(--spacing-sm); 
+            }
+            .simulation-cards { 
+                grid-template-columns: 1fr; 
+            }
+            .community-grid { 
+                grid-template-columns: 1fr; 
+                gap: var(--spacing-sm);
+            }
+            .modal-content { 
+                margin: var(--spacing-xs); 
+                padding: var(--spacing-md); 
+            }
+        }
+
+        /* ===== ANIMAÇÕES CSS ===== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes modalSlideIn {
+            to { transform: scale(1) translateY(0); }
+        }
+
+        /* ===== TOOLTIPS PARA APRENDIZADO (MELHOR EM MOBILE) ===== */
+        /* Dica: Use title ou CSS para tooltips educacionais. */
+        [data-tooltip] {
+            position: relative;
+        }
+
+        [data-tooltip]::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text);
+            color: white;
+            padding: var(--spacing-xs);
+            border-radius: 4px;
+            font-size: 0.75rem; /* Menor em mobile */
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 10;
+            max-width: 200px;
+            text-align: center;
+        }
+
+        [data-tooltip]:hover::after {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            [data-tooltip]::after {
+                position: static;
+                transform: none;
+                display: none; /* Desabilita tooltips em mobile para evitar sobreposição */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== HEADER ===== -->
+    <header>
+        <a href="#" class="logo" onclick="showScreen('servicos')">
+            <i class="fas fa-hands-helping"></i> Mão-na-Massa
+        </a>
+        <nav id="mainNav">
+            <button class="active" onclick="showScreen('servicos')" data-tooltip="Tela principal de serviços comunitários"><i class="fas fa-home"></i> Serviços Comunitários</button>
+            <button onclick="showScreen('educacional')" data-tooltip="Modo aprendizado com dicas"><i class="fas fa-graduation-cap"></i> Versão Educacional</button>
+            <button onclick="showScreen('cadastro')" data-tooltip="Simule cadastro de ajuda"><i class="fas fa-user-plus"></i> Oferecer Ajuda</button>
+            <button onclick="showScreen('comunidade')" data-tooltip="Recursos para apoio mútuo"><i class="fas fa-users"></i> Rede de Apoio</button>
+        </nav>
+        <div class="mobile-menu" onclick="toggleMobileMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
+    </header>
+
+    <!-- ===== TELA SERVIÇOS COMUNITÁRIOS (ATIVA POR PADRÃO) ===== -->
+    <div id="servicos" class="screen active">
+        <section class="hero">
+            <div class="hero-content">
+                <h1 data-tooltip="Título hero: Use gradiente para impacto visual">Plataforma Mão-na-Massa: Serviços e Ajuda para a Comunidade Local</h1>
+                <p>Uma ferramenta educacional para simular trocas solidárias, apoio mútuo e serviços acessíveis. Foque em cidadania: troque horas, ajude vizinhos e fortaleça laços comunitários. Ideal para aulas de UX e desenvolvimento colaborativo.</p>
+                <div class="hero-actions">
+                    <a href="#busca" class="btn btn-primary"><i class="fas fa-search"></i> Explorar Ajuda Agora</a>
+                    <button class="btn btn-secondary" onclick="showScreen('educacional')"><i class="fas fa-book"></i> Guia Educacional</button>
+                </div>
+            </div>
+            <div class="simulation-cards">
+                <div class="simulation-card">
+                    <h3><i class="fas fa-exchange-alt"></i> Troca Solidária</h3>
+                    <p>Simule troca de serviços: ofereça reforço escolar e ganhe ajuda em manutenção. Sem dinheiro, só comunidade!</p>
+                </div>
+                <div class="simulation-card">
+                    <h3><i class="fas fa-heart"></i> Apoio Mútuo</h3>
+                    <p>Em app real, conecte-se a rede de vizinhos. Use localStorage para simular trocas persistentes.</p>
+                </div>
+                <div class="simulation-card">
+                    <h3><i class="fas fa-users"></i> Rede Ativa</h3>
+                    <p>Fortaleça o bairro: vote em ações coletivas e veja o impacto simulado crescer.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="search-section" id="busca">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Buscar por ajuda, troca ou necessidade..." data-tooltip="Busca real-time com debounce para performance">
+            </div>
+            <div class="categories" id="categories">
+                <button class="category-btn active" data-category="todos"><i class="fas fa-star"></i> Todos</button>
+                <button class="category-btn" data-category="apoio"><i class="fas fa-heart"></i> Apoio Mútuo</button>
+                <button class="category-btn" data-category="troca"><i class="fas fa-exchange-alt"></i> Troca de Horas</button>
+                <button class="category-btn" data-category="manutencao"><i class="fas fa-tools"></i> Manutenção</button>
+                <button class="category-btn" data-category="educacao"><i class="fas fa-chalkboard-teacher"></i> Educação</button>
+                <button class="category-btn" data-category="saude"><i class="fas fa-heartbeat"></i> Saúde & Bem-estar</button>
+            </div>
+            <div class="professionals-grid" id="professionalsGrid">
+                <!-- Populando via JS -->
+            </div>
+            <p style="text-align: center; color: var(--muted); margin-top: var(--spacing-md);" id="resultsCount">Carregando oportunidades comunitárias...</p>
+        </section>
+    </div>
+
+    <!-- ===== TELA RECURSOS COMUNITÁRIOS ===== -->
+    <div id="comunidade" class="screen">
+        <section class="educational-screen">
+            <h2><i class="fas fa-users-gear"></i> Rede de Apoio Comunitário</h2>
+            <p>Simule interações reais: ajude e seja ajudado. Foque em empatia e solidariedade local.</p>
+            <div class="community-grid">
+                <div class="community-card">
+                    <i class="fas fa-shopping-cart" style="font-size: 2.5rem; margin-bottom: var(--spacing-sm); color: var(--success);"></i>
+                    <h3>Levar Compras</h3>
+                    <p>Apoio para idosos: simule entrega em 20min.</p>
+                    <button class="btn btn-success" onclick="simularApoio('compras')">Solicitar Ajuda</button>
+                </div>
+                <div class="community-card">
+                    <i class="fas fa-school" style="font-size: 2.5rem; margin-bottom: var(--spacing-sm); color: var(--success);"></i>
+                    <h3>Reforço Escolar</h3>
+                    <p>Troque horas por aulas: ganhe selos comunitários.</p>
+                    <button class="btn btn-success" onclick="simularApoio('escolar')">Participar</button>
+                </div>
+                <div class="community-card">
+                    <i class="fas fa-utensils" style="font-size: 2.5rem; margin-bottom: var(--spacing-sm); color: var(--success);"></i>
+                    <h3>Refeição Compartilhada</h3>
+                    <p>Cozinhe junto: simule potluck virtual.</p>
+                    <button class="btn btn-success" onclick="simularApoio('refeicao')">Juntar-se</button>
+                </div>
+                <div class="community-card">
+                    <i class="fas fa-user-friends" style="font-size: 2.5rem; margin-bottom: var(--spacing-sm); color: var(--success);"></i>
+                    <h3>Conversas de Vizinhança</h3>
+                    <p>Fortaleça laços: simule chat em grupo.</p>
+                    <button class="btn btn-success" onclick="simularApoio('conversa')">Conectar</button>
+                </div>
+            </div>
+            <div class="hero-actions" style="justify-content: center; margin-top: var(--spacing-lg);">
+                <button class="btn btn-primary" onclick="showScreen('servicos')"><i class="fas fa-arrow-left"></i> Voltar</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- ===== TELA VERSÃO EDUCACIONAL (ATUALIZADA PARA COMUNIDADE) ===== -->
+    <div id="educacional" class="screen">
+        <section class="educational-screen">
+            <h2><i class="fas fa-lightbulb"></i> Versão Educacional: Design para Comunidades Solidárias</h2>
+            <p>Como web designer, foquei em UX intuitiva, acessibilidade (ARIA labels implícitos via semântica) e performance (CSS otimizado). Esta plataforma simula um ecossistema comunitário com trocas, apoio e aprendizado colaborativo.</p>
+            <h3 data-tooltip="Lista de aprendizado: Use <ul> semântico">Objetivos de Aprendizado com Foco Comunitário:</h3>
+            <ul style="text-align: left; max-width: 600px; margin: 0 auto; padding-left: var(--spacing-lg);">
+                <li><strong>Design System:</strong> Variáveis CSS para consistência e temas solidários (ex: cores de empatia).</li>
+                <li><strong>Layouts Responsivos:</strong> Grid/Flexbox + media queries para acessibilidade em comunidades diversas.</li>
+                <li><strong>Interatividade JS:</strong> Filtros, modais, localStorage para simular rede de trocas persistentes.</li>
+                <li><strong>UX/UI Avançada:</strong> Animações suaves, glassmorphism, tooltips para orientação comunitária.</li>
+                <li><strong>Acessibilidade:</strong> Contraste WCAG, navegação teclado, ARIA para inclusão de todos os vizinhos.</li>
+                <li><strong>Foco Solidário:</strong> Simulações de apoio mútuo, trocas sem dinheiro e gamificação para engajamento local.</li>
+            </ul>
+            <div class="hero-actions" style="justify-content: center; margin-top: var(--spacing-lg);">
+                <button class="btn btn-primary" onclick="showScreen('servicos')"><i class="fas fa-arrow-left"></i> Voltar aos Serviços</button>
+                <button class="btn btn-secondary" onclick="downloadCode()">📥 Baixar Código Fonte</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- ===== TELA SIMULAR CADASTRO (FOCO EM AJUDA COMUNITÁRIA) ===== -->
+    <div id="cadastro" class="screen">
+        <section class="cadastro-screen">
+            <h2><i class="fas fa-user-edit"></i> Oferecer Ajuda à Comunidade</h2>
+            <p>Preencha para adicionar sua oferta ao "banco solidário". Validação em tempo real e feedback visual para incentivar a participação.</p>
+            <form id="cadastroForm">
+                <div class="form-group">
+                    <label for="nome">O Que Você Oferece:</label>
+                    <input type="text" id="nome" required minlength="3" data-tooltip="Ex: 'Reforço em Matemática' – mínimo 3 chars para realismo">
+                    <div class="error-message" id="nomeError">Deve ter pelo menos 3 caracteres.</div>
+                </div>
+                <div class="form-group">
+                    <label for="servico">Categoria Comunitária:</label>
+                    <select id="servico" required>
+                        <option value="">Selecione...</option>
+                        <option value="apoio">Apoio Mútuo</option>
+                        <option value="troca">Troca de Horas</option>
+                        <option value="manutencao">Manutenção</option>
+                        <option value="educacao">Educação</option>
+                        <option value="saude">Saúde & Bem-estar</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="preco">Horas ou Preço Base (R$):</label>
+                    <input type="number" id="preco" min="0" max="500" required placeholder="0 para troca por horas">
+                    <div class="error-message" id="precoError">Entre 0 (troca) e R$500.</div>
+                </div>
+                <div class="form-group">
+                    <label for="descricao">Detalhes da Ajuda:</label>
+                    <textarea id="descricao" rows="4" required minlength="10" placeholder="Ex: Ajudo com compras para idosos, 1h por troca"></textarea>
+                    <div class="error-message" id="descError">Descrição deve ter pelo menos 10 chars.</div>
+                </div>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Adicionar à Rede</button>
+            </form>
+            <p style="color: var(--muted); margin-top: var(--spacing-md);" id="cadastroFeedback"></p>
+            <div class="hero-actions" style="justify-content: center; margin-top: var(--spacing-lg);">
+                <button class="btn btn-secondary" onclick="showScreen('servicos')"><i class="fas fa-arrow-left"></i> Voltar</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- ===== MODAL DE CONTRATAÇÃO (ADAPTADO PARA COMUNIDADE) ===== -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()" aria-label="Fechar modal">&times;</span>
+            <h2 id="modalTitle"><i class="fas fa-check-circle" style="color: var(--success);"></i> Ajuda Conectada!</h2>
+            <p id="modalDesc">Você selecionou <strong id="modalProf"></strong>. Nesta simulação, a troca foi ativada! Em produção, integre com chat comunitário e notificações para vizinhos próximos.</p>
+            <div style="margin-top: var(--spacing-md);">
+                <button class="btn btn-success" onclick="confirmHire()" style="margin-right: var(--spacing-sm);">Confirmar Troca</button>
+                <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Mão-na-Massa – Plataforma para Comunidades Solidárias e Educativas. Desenhado para unir vizinhos e inspirar devs.</p>
+            <div class="footer-links">
+                <a href="#" onclick="showScreen('educacional')"><i class="fas fa-info-circle"></i> Guia</a>
+                <a href="#" onclick="showScreen('cadastro')"><i class="fas fa-user-plus"></i> Oferecer Ajuda</a>
+                <a href="#" onclick="showScreen('comunidade')"><i class="fas fa-users"></i> Rede</a>
+                <a href="#" onclick="downloadCode()">📥 Código Fonte</a>
+            </div>
+        </div>
+        <p style="font-size: 0.9rem; margin-top: var(--spacing-sm); opacity: 0.8;">Data/Hora Atual: <span id="currentTime"></span> | Feito com <i class="fas fa-heart" style="color: var(--primary);"></i> para comunidades unidas em HTML/CSS/JS Puro</p>
+    </footer>
+
+    <script>
+        // ===== DADOS SIMULADOS E PERSISTÊNCIA (FOCO COMUNITÁRIO) =====
+        // Dica: localStorage para simular DB. Carregue/salve para completude.
+        let professionals = JSON.parse(localStorage.getItem('professionals')) || [
+            { id: 1, name: 'Apoio Idosos Maria', category: 'apoio', desc: 'Levar compras e companhia', price: 0, icon: '<i class="fas fa-heart"></i>', rating: 4.8 },
+            { id: 2, name: 'Troca Horas Ana', category: 'troca', desc: 'Reforço escolar por manutenção', price: 2, icon: '<i class="fas fa-exchange-alt"></i>', rating: 4.9 },
+            { id: 3, name: 'Bem-estar Carla', category: 'saude', desc: 'Dicas de saúde e massagem', price: 30, icon: '<i class="fas fa-heartbeat"></i>', rating: 4.7 },
+            { id: 4, name: 'Manutenção João', category: 'manutencao', desc: 'Reparos em casa por troca', price: 0, icon: '<i class="fas fa-tools"></i>', rating: 4.6 },
+            { id: 5, name: 'Educação Prof. Ana', category: 'educacao', desc: 'Aulas de matemática comunitária', price: 1, icon: '<i class="fas fa-chalkboard-teacher"></i>', rating: 5.0 },
+            { id: 6, name: 'Suporte Pedro', category: 'apoio', desc: 'Ajuda técnica para vizinhos', price: 0, icon: '<i class="fas fa-users"></i>', rating: 4.5 }
+        ];
+
+        let hires = JSON.parse(localStorage.getItem('hires')) || [];
+        let currentCategory = 'todos';
+        let searchTerm = '';
+        let debounceTimer;
+
+        // ===== NAVEGAÇÃO E MOBILE MENU (MELHORADO PARA RESPONSIVIDADE) =====
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+            document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`nav button[onclick="showScreen('${screenId}')"]`)?.classList.add('active');
+            if (screenId === 'servicos') renderProfessionals();
+            window.scrollTo(0, 0);
+            // Fecha menu mobile ao navegar
+            const nav = document.getElementById('mainNav');
+            if (window.innerWidth <= 768) nav.style.display = 'none';
+        }
+
+        function toggleMobileMenu() {
+            const nav = document.getElementById('mainNav');
+            nav.classList.toggle('active');
+            if (nav.classList.contains('active')) {
+                nav.style.display = 'flex';
+            } else {
+                nav.style.display = 'none';
+            }
+        }
+
+        // ===== BUSCA E FILTRO COM DEBOUNCE =====
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                searchTerm = e.target.value.toLowerCase();
+                renderProfessionals();
+            }, 300); // Debounce para UX suave
+        });
+
+        document.getElementById('categories').addEventListener('click', (e) => {
+            if (e.target.closest('.category-btn')) {
+                document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+                e.target.closest('.category-btn').classList.add('active');
+                currentCategory = e.target.closest('.category-btn').dataset.category;
+                renderProfessionals();
+            }
+        });
+
+        function renderProfessionals() {
+            const grid = document.getElementById('professionalsGrid');
+            const filtered = professionals.filter(pro => {
+                const matchesCategory = currentCategory === 'todos' || pro.category === currentCategory;
+                const matchesSearch = pro.name.toLowerCase().includes(searchTerm) || pro.desc.toLowerCase().includes(searchTerm);
+                return matchesCategory && matchesSearch;
+            });
+
+            grid.innerHTML = filtered.map(pro => `
+                <div class="professional-card" data-category="${pro.category}">
+                    <div class="professional-icon">${pro.icon}</div>
+                    <span class="professional-tag">${pro.desc}</span>
+                    <h3>${pro.name}</h3>
+                    <p>${pro.desc} – ${pro.price > 0 ? 'R$ ' + pro.price : 'Troca por horas'}</p>
+                    <div class="professional-price">${pro.price > 0 ? 'R$ ' + pro.price : 'Grátis/Solidário'} <span style="font-size: 0.8rem; color: var(--muted);">(base)</span></div>
+                    <div class="professional-rating">
+                        ${'<i class="fas fa-star"></i>'.repeat(Math.floor(pro.rating))} 
+                        <span style="color: var(--muted); font-size: 0.9rem;">(${pro.rating})</span>
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: var(--spacing-md);" onclick="simulateHire(${pro.id})">
+                        <i class="fas fa-handshake"></i> Conectar (Simulação)
+                    </button>
+                </div>
+            `).join('');
+
+            document.getElementById('resultsCount').textContent = `${filtered.length} oportunidades de ajuda comunitária`;
+            localStorage.setItem('professionals', JSON.stringify(professionals)); // Persistência
+        }
+
+        // ===== SIMULAÇÃO DE CONEXÃO COMUNITÁRIA =====
+        function simulateHire(id) {
+            const pro = professionals.find(p => p.id === id);
+            document.getElementById('modalProf').textContent = `${pro.name} - ${pro.desc}`;
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        function confirmHire() {
+            const pro = professionals.find(p => p.id === parseInt(document.getElementById('modalProf').textContent.split(' - ')[0].match(/\d+/)?.[0] || 1));
+            hires.unshift({ ...pro, date: new Date().toLocaleString('pt-BR') });
+            localStorage.setItem('hires', JSON.stringify(hires));
+            closeModal();
+            alert('Conexão comunitária confirmada! Simulação: +1 laço fortalecido na rede.');
+        }
+
+        // ===== SIMULAÇÕES DE APOIO =====
+        function simularApoio(tipo) {
+            let msg = '';
+            if (tipo === 'compras') msg = 'Simulação: Compras entregues. Vizinho: "Obrigado pela solidariedade!" +1 hora no banco comunitário.';
+            else if (tipo === 'escolar') msg = 'Simulação: Aula realizada. Aluno: "Entendi tudo!" Troca ativada.';
+            else if (tipo === 'refeicao') msg = 'Simulação: Refeição compartilhada. Família: "Mesa farta graças à rede!"';
+            else msg = 'Simulação: Conversa fluida. Laços: "Mais unidos que nunca!"';
+            alert(msg);
+        }
+
+        // ===== FORMULÁRIO COM VALIDAÇÃO (ADAPTADO PARA COMUNIDADE) =====
+        document.getElementById('cadastroForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const nome = document.getElementById('nome').value;
+            const preco = parseInt(document.getElementById('preco').value) || 0;
+            const desc = document.getElementById('descricao').value;
+
+            // Validação
+            let valid = true;
+            if (nome.length < 3) { document.getElementById('nomeError').style.display = 'block'; valid = false; } else { document.getElementById('nomeError').style.display = 'none'; }
+            if (preco < 0 || preco > 500) { document.getElementById('precoError').style.display = 'block'; valid = false; } else { document.getElementById('precoError').style.display = 'none'; }
+            if (desc.length < 10) { document.getElementById('descError').style.display = 'block'; valid = false; } else { document.getElementById('descError').style.display = 'none'; }
+
+            if (!valid) return;
+
+            const newPro = {
+                id: professionals.length + 1,
+                name: nome,
+                category: document.getElementById('servico').value,
+                desc: desc,
+                price: preco,
+                icon: '<i class="fas fa-users"></i>', // Ícone comunitário
+                rating: 4.5
+            };
+            professionals.push(newPro);
+            document.getElementById('cadastroFeedback').innerHTML = '<span style="color: var(--success);">Oferta adicionada à rede comunitária! <i class="fas fa-check"></i> Simulação: 5 vizinhos notificados.</span>';
+            document.getElementById('cadastroForm').reset();
+            setTimeout(() => showScreen('servicos'), 1500);
+        });
+
+        // Validação em tempo real
+        ['nome', 'preco', 'descricao'].forEach(id => {
+            document.getElementById(id).addEventListener('blur', () => {
+                // Trigger validation logic here if needed
+            });
+        });
+
+        // ===== UTILITÁRIOS =====
+        function downloadCode() {
+            const code = document.documentElement.outerHTML;
+            const blob = new Blob([code], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'mao-na-massa-comunitaria.html';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function updateTime() {
+            document.getElementById('currentTime').textContent = new Date().toLocaleString('pt-BR');
+        }
+
+        // Inicialização
+        window.onload = () => {
+            renderProfessionals();
+            updateTime();
+            setInterval(updateTime, 1000);
+            // Fechar modal ao clicar fora
+            document.getElementById('modal').addEventListener('click', (e) => {
+                if (e.target === e.currentTarget) closeModal();
+            });
+            // Teclado: ESC fecha modal
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+            // Melhorar menu mobile: fechar ao redimensionar
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 768) {
+                    document.getElementById('mainNav').style.display = 'flex';
+                    document.getElementById('mainNav').classList.remove('active');
+                }
+            });
+        };
+    </script>
+</body>
+</html>
